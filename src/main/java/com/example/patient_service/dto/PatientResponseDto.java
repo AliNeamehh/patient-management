@@ -47,7 +47,4 @@ public class PatientResponseDto {
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
-
-
-
 }

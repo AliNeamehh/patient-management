@@ -5,7 +5,9 @@ import com.example.patient_service.dto.PatientResponseDto;
 import com.example.patient_service.mapper.PatientMapper;
 import com.example.patient_service.model.Patient;
 import com.example.patient_service.repository.PatientRepository;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class PatientService {
    }
 
 
-   public PatientResponseDto createPatient(PatientRequestDto patientRequestDto){
+   public PatientResponseDto createPatient(@Valid @RequestBody PatientRequestDto patientRequestDto){
         Patient patient = patientRepository.save(
                 PatientMapper.toModel(patientRequestDto)
         );

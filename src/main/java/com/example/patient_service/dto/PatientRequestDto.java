@@ -23,30 +23,14 @@ public class PatientRequestDto {
 
 
     @NotNull(message = "Registered date is required")
-    private String registeedDate;
+    private String registrationDate;
 
-    public String getName() {
-        return name;
+    public String getRegistrationDate() {
+        return registrationDate;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setRegistrationDate(String registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
     public String getDateOfBirth() {
@@ -57,11 +41,27 @@ public class PatientRequestDto {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getRegisteedDate() {
-        return registeedDate;
+    public String getAddress() {
+        return address;
     }
 
-    public void setRegisteedDate(String registeedDate) {
-        this.registeedDate = registeedDate;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

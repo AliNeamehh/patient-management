@@ -30,9 +30,9 @@ public class Patient {
     @NotNull
     private LocalDate dateOfBirth;
 
+
     @NotNull
     private LocalDate registrationDate;
-
 
     public UUID getId() {
         return id;
