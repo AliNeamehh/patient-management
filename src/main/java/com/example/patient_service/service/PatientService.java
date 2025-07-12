@@ -3,6 +3,7 @@ package com.example.patient_service.service;
 import com.example.patient_service.dto.PatientRequestDto;
 import com.example.patient_service.dto.PatientResponseDto;
 import com.example.patient_service.exception.EmailAlreadyExistsException;
+import com.example.patient_service.exception.PatientNotfoundException;
 import com.example.patient_service.mapper.PatientMapper;
 import com.example.patient_service.model.Patient;
 import com.example.patient_service.repository.PatientRepository;
@@ -10,36 +11,52 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PatientService {
 
-    private PatientRepository patientRepository;
+    private final PatientRepository patientRepository;
 
     public PatientService(PatientRepository patientRepository) {
         this.patientRepository = patientRepository;
     }
 
-   public List<PatientResponseDto> getPatients(){
+    public List<PatientResponseDto> getPatients() {
 
-        List<Patient>  patients = patientRepository.findAll();
+        List<Patient> patients = patientRepository.findAll();
 
-       return patients.stream().map(
-                PatientMapper::toDto
-        ).toList();
-   }
+        return patients.stream().map(PatientMapper::toDto).toList();
+    }
 
 
-   public PatientResponseDto createPatient(@Valid @RequestBody PatientRequestDto patientRequestDto){
+    public PatientResponseDto createPatient(@Valid @RequestBody PatientRequestDto patientRequestDto) {
         if (patientRepository.existsByEmail(patientRequestDto.getEmail())) {
             throw new EmailAlreadyExistsException("Email already exists: " + patientRequestDto.getEmail());
         }
-        Patient patient = patientRepository.save(
-                PatientMapper.toModel(patientRequestDto)
-        );
+        Patient patient = patientRepository.save(PatientMapper.toModel(patientRequestDto));
         return PatientMapper.toDto(patient);
-   }
+    }
+
+    public PatientResponseDto updatePatient(UUID id, PatientRequestDto patientRequestDto) {
+        Patient patient = patientRepository.findById(id).orElseThrow(() -> new PatientNotfoundException("Patient not found with id: " + id));
+
+
+        if (patientRepository.existsByEmail(patientRequestDto.getEmail())) {
+            throw new EmailAlreadyExistsException("Email already exists: " + patientRequestDto.getEmail());
+        }
+
+        patient.setName(patientRequestDto.getName());
+        patient.setEmail(patientRequestDto.getEmail());
+        patient.setAddress(patientRequestDto.getAddress());
+        patient.setDateOfBirth(LocalDate.parse(patientRequestDto.getDateOfBirth()));
+
+
+         Patient UpdatedPatient= patientRepository.save(patient);
+        return PatientMapper.toDto(UpdatedPatient);
+    }
 
 
 }
