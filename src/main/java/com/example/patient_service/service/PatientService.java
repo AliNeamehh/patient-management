@@ -32,7 +32,7 @@ public class PatientService {
     }
 
 
-    public PatientResponseDto createPatient(@Valid @RequestBody PatientRequestDto patientRequestDto) {
+    public PatientResponseDto createPatient(PatientRequestDto patientRequestDto) {
         if (patientRepository.existsByEmail(patientRequestDto.getEmail())) {
             throw new EmailAlreadyExistsException("Email already exists: " + patientRequestDto.getEmail());
         }
@@ -44,7 +44,7 @@ public class PatientService {
         Patient patient = patientRepository.findById(id).orElseThrow(() -> new PatientNotfoundException("Patient not found with id: " + id));
 
 
-        if (patientRepository.existsByEmail(patientRequestDto.getEmail())) {
+        if (patientRepository.existsByEmailAndIdNot(patientRequestDto.getEmail(), id)) {
             throw new EmailAlreadyExistsException("Email already exists: " + patientRequestDto.getEmail());
         }
 
