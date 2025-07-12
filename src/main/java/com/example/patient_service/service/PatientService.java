@@ -7,9 +7,8 @@ import com.example.patient_service.exception.PatientNotfoundException;
 import com.example.patient_service.mapper.PatientMapper;
 import com.example.patient_service.model.Patient;
 import com.example.patient_service.repository.PatientRepository;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 import java.time.LocalDate;
 import java.util.List;
@@ -56,6 +55,11 @@ public class PatientService {
 
          Patient UpdatedPatient= patientRepository.save(patient);
         return PatientMapper.toDto(UpdatedPatient);
+    }
+
+
+    public void deletePatient(UUID id) {
+        patientRepository.deleteById(id);
     }
 
 
