@@ -36,6 +36,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(error);
     }
 
+
     @ExceptionHandler(PatientNotfoundException.class)
     public ResponseEntity<Map<String, String>> handlePatientNotFound(PatientNotfoundException ex) {
 
@@ -44,5 +45,7 @@ public class GlobalExceptionHandler {
         error.put("error", ex.getMessage());
         return ResponseEntity.badRequest().body(error);
     }
+
+
 
 }
