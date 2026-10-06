@@ -1,36 +1,79 @@
-# 🏥 Patient Management Microservices System
+# Patient Management Microservices System
 
-This project implements a full **Spring Boot Microservices Architecture** that simulates a real-world patient management and healthcare billing system. It includes modular services with modern features such as **gRPC**, **Kafka**, **JWT Authentication**, **Dockerized Deployment**, and **Cloud Infrastructure** with **AWS CloudFormation**.
+A **learning-focused Spring Boot microservices project** that simulates a patient management and healthcare billing platform.
 
----
+The repository explores how multiple backend services can communicate using REST, gRPC, and Kafka, while authentication is handled with Spring Security and JWT.
 
-## 🔧 Technologies Used
+> This project is primarily for learning and practicing microservices and distributed-system concepts.
 
-- **Spring Boot 3** (REST APIs, Controllers, Services)
-- **gRPC** (Service-to-service communication)
-- **Kafka** (Event-driven architecture)
-- **Spring Security + JWT** (Authentication & Authorization)
-- **Docker + Docker Compose**
-- **CloudFormation (IaC)** for provisioning AWS services
-- **LocalStack** for local AWS simulation
-- **JUnit** + **TestContainers** for integration testing
-- **OpenAPI (Swagger)** for API documentation
+## Architecture
 
----
+| Service | Responsibility |
+|---|---|
+| `patient-service` | Patient CRUD, validation, secured endpoints, Kafka producer, gRPC client |
+| `billing-service` | Billing-related gRPC service |
+| `analytics-service` | Consumes patient events from Kafka |
+| `auth-service` | User login, JWT generation, and token validation |
+| `api-gateway` | Request routing and JWT filtering |
+| `infrastructure` | Cloud infrastructure templates and local infrastructure setup |
 
-## 🧱 Microservices Overview
+## Technologies Explored
 
-| Service          | Description                                                                 |
-|------------------|-----------------------------------------------------------------------------|
-| `patient-service`| CRUD for patients, validation, JWT-secured endpoints, Kafka producer, gRPC  |
-| `billing-service`| gRPC server for billing integration                                         |
-| `analytics-service`| Kafka consumer for analytics on patient events                          |
-| `auth-service`   | Handles user login, JWT generation and validation                           |
-| `api-gateway`    | Routes requests, applies JWT filters, serves Swagger docs                   |
-| `infrastructure` | AWS VPC, RDS, ECS, MSK, Load Balancer (CloudFormation templates)            |
+- Java
+- Spring Boot 3
+- Spring Security
+- JWT authentication
+- REST APIs
+- gRPC
+- Kafka
+- Docker and Docker Compose
+- OpenAPI / Swagger
+- AWS CloudFormation concepts
+- LocalStack
+- JUnit and Testcontainers are present in the project as part of the learning implementation
 
----
+## Request Flow
 
-## 🚀 How to Run
+```text
+Client
+  |
+  v
+API Gateway
+  |
+  +--> Auth Service
+  |
+  +--> Patient Service
+          |
+          +--> Billing Service (gRPC)
+          |
+          +--> Kafka
+                 |
+                 v
+          Analytics Service
+```
+
+## What I Practiced
+
+- Structuring services around separate responsibilities
+- Securing endpoints with JWT
+- Service-to-service communication using gRPC
+- Event-driven communication using Kafka
+- Containerizing services with Docker
+- Understanding API Gateway responsibilities
+- Exploring infrastructure-as-code and local cloud simulation
+
+## Running the Project
+
+Because this repository contains multiple services and infrastructure components, start by reviewing the configuration for each service and the Docker Compose setup.
+
+Typical local development flow:
 
 ```bash
+docker compose up
+```
+
+Then run or inspect the individual Spring Boot services as needed.
+
+## Purpose
+
+The goal of this repository is to build practical understanding of microservices architecture and the trade-offs involved in distributed backend systems.
