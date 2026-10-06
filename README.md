@@ -1,79 +1,92 @@
-# Patient Management Microservices System
+# Patient Management
 
-A **learning-focused Spring Boot microservices project** that simulates a patient management and healthcare billing platform.
+A learning project built with **Java 21** and **Spring Boot** to practice backend structure, REST APIs, persistence, validation, and service separation.
 
-The repository explores how multiple backend services can communicate using REST, gRPC, and Kafka, while authentication is handled with Spring Security and JWT.
+## Current Implementation
 
-> This project is primarily for learning and practicing microservices and distributed-system concepts.
+The repository currently contains two modules:
 
-## Architecture
+- **patient-service** — the main implemented REST service for patient management
+- **billing-service** — a separate service that is still being developed
 
-| Service | Responsibility |
-|---|---|
-| `patient-service` | Patient CRUD, validation, secured endpoints, Kafka producer, gRPC client |
-| `billing-service` | Billing-related gRPC service |
-| `analytics-service` | Consumes patient events from Kafka |
-| `auth-service` | User login, JWT generation, and token validation |
-| `api-gateway` | Request routing and JWT filtering |
-| `infrastructure` | Cloud infrastructure templates and local infrastructure setup |
+## Patient Service
 
-## Technologies Explored
+The patient service currently includes:
 
-- Java
+- Create, read, update, and delete patient operations
+- Request DTOs and response DTOs
+- Input validation
+- Duplicate-email checks
+- Global exception handling
+- Spring Data JPA persistence
+- PostgreSQL runtime support
+- H2 support
+- OpenAPI / Swagger documentation
+- Dockerfile for containerizing the patient service
+
+## Tech Stack
+
+- Java 21
 - Spring Boot 3
-- Spring Security
-- JWT authentication
-- REST APIs
-- gRPC
-- Kafka
-- Docker and Docker Compose
+- Spring Web
+- Spring Data JPA
+- PostgreSQL
+- H2
+- Bean Validation
+- Lombok
 - OpenAPI / Swagger
-- AWS CloudFormation concepts
-- LocalStack
-- JUnit and Testcontainers are present in the project as part of the learning implementation
+- Maven
 
-## Request Flow
+## Project Structure
 
 ```text
-Client
-  |
-  v
-API Gateway
-  |
-  +--> Auth Service
-  |
-  +--> Patient Service
-          |
-          +--> Billing Service (gRPC)
-          |
-          +--> Kafka
-                 |
-                 v
-          Analytics Service
+patient-management/
+├── patient-service/
+│   ├── controller/
+│   ├── dto/
+│   ├── exception/
+│   ├── mapper/
+│   ├── model/
+│   ├── repository/
+│   └── service/
+│
+└── billing-service/
 ```
+
+## Patient Service Flow
+
+```text
+HTTP Request
+    |
+    v
+Controller
+    |
+    v
+Service
+    |
+    v
+Repository
+    |
+    v
+Database
+```
+
+## Billing Service Status
+
+The repository also contains a separate billing-service module. Some gRPC-related code and configuration exist inside that module, but the complete patient-to-billing integration is not yet implemented.
+
+Because of that, this repository should be viewed as a **work-in-progress learning project**, not as a completed microservices platform.
 
 ## What I Practiced
 
-- Structuring services around separate responsibilities
-- Securing endpoints with JWT
-- Service-to-service communication using gRPC
-- Event-driven communication using Kafka
-- Containerizing services with Docker
-- Understanding API Gateway responsibilities
-- Exploring infrastructure-as-code and local cloud simulation
-
-## Running the Project
-
-Because this repository contains multiple services and infrastructure components, start by reviewing the configuration for each service and the Docker Compose setup.
-
-Typical local development flow:
-
-```bash
-docker compose up
-```
-
-Then run or inspect the individual Spring Boot services as needed.
+- Structuring a Spring Boot backend into controller, service, repository, and DTO layers
+- Mapping between entities and DTOs
+- Validating incoming requests
+- Handling application exceptions centrally
+- Working with JPA repositories
+- Building REST CRUD operations
+- Separating responsibilities into different services
 
 ## Purpose
 
-The goal of this repository is to build practical understanding of microservices architecture and the trade-offs involved in distributed backend systems.
+The purpose of this repository is to strengthen my understanding of Spring Boot backend development and gradually expand it into a multi-service application.
